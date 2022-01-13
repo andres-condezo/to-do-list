@@ -1,6 +1,6 @@
 # To-Do-list
 
->	This is a repository for a book list app to store your favorite books.
+>	The To-Do list app is a minimalist planner to organize your day.
 
 ## Screenshots:
 
@@ -25,13 +25,8 @@
 - Learn how to use proper ES6 syntax.
 - Use ES6 modules to write modular JavaScript.
 
-## Live Demo
-
-[Live Demo Link](https://andres-condezo.github.io/To-Do-list/)
-
 ## Getting Started
 
-- In order to see the web pagein your browser you must click on the "Live Demo" link.
 - To get a local copy up and running follow these simple example steps:
 
 ### Prerequisites
