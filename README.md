@@ -41,6 +41,8 @@
 $ git clone https://github.com/andres-condezo/To-Do-list.git
 </code>
 
+---
+
 
 - To install the dependencies run: 
 
@@ -48,6 +50,7 @@ $ git clone https://github.com/andres-condezo/To-Do-list.git
 $ npm Install
 </code>
 
+---
 
 ### Usage
 
@@ -57,6 +60,7 @@ $ npm Install
 $ npm start
 </code>
 
+---
 
 - The page will now automatically open in your browser. 
 
