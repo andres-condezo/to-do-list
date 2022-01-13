@@ -1,0 +1,125 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 62.5%;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.to-do-container {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 1.6em;
+  padding: 1rem;
+  padding: 2rem;
+}
+
+header .refresh {
+  color: grey;
+  font-size: 1.6em;
+  margin-right: 2rem;
+  cursor: pointer;
+}
+
+header .refresh:hover {
+  color: black;
+}
+
+.new-task {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  padding: 2rem;
+  font-style: italic;
+  font-size: 1.6em;
+}
+
+::placeholder {
+  color: grey;
+}
+
+.list-container {
+  width: 100%;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+li {
+  font-size: 1.8em;
+  list-style: none;
+  width: 100%;
+}
+
+.check-box {
+  margin-right: 1rem;
+}
+
+.list-container ul li .kebab {
+  color: grey;
+  float: right;
+  cursor: move;
+}
+
+button {
+  all: unset;
+  width: 100%;
+  color: grey;
+  background-color: #e6e6e6;
+  font-size: 1.6em;
+  height: 6rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+button:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+/* media queries */
+
+/* Medium Devices, Desktops */
+
+@media (min-width: 992px) {
+  .to-do-container {
+    width: 40%;
+  }
+}
