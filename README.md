@@ -1,3 +1,5 @@
+![](https://img.shields.io/badge/Microverse-blueviolet)
+
 # To-Do-list
 
 >	The To-Do list app is a minimalist planner to organize your day.
@@ -14,10 +16,12 @@
 
 ## Built With
 
-- HTML
-- CSS
-- JavaScript
-- Webpack
+### - Major languages:
+  - HTML
+  - CSS
+  - JavaScript
+### - Technologies used:
+  - Webpack
 
 ## Learning objectives
 
@@ -64,6 +68,7 @@ $ npm start
 
 - The page will now automatically open in your browser. 
 
+---
 
 ## Authors
 
@@ -73,9 +78,19 @@ $ npm start
 - Twitter: [@andres_condezo](https://twitter.com/andres_condezo)
 - LinkedIn: [andres-condezo](https://linkedin.com/in/andres-condezo)
 
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](../../issues/).
+
 ## Show your support
 
 Give a ⭐️ if you like this project!
+
+## Acknowledgments
+
+- Icons from fontAwesome.
 
 ## 📝 License
 

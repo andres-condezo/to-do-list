@@ -1,3 +1,10 @@
+:root {
+  --neutral-color: #172b4d;
+  --primary-color: #7f8cff;
+  --accent-color: #2230d2;
+  --font-sans: verdana, arial, sans-serif;
+}
+
 /* Reset default styles */
 * {
   margin: 0;
@@ -6,7 +13,7 @@
 }
 
 html {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: var(--font-sans);
   font-size: 62.5%;
 }
 
@@ -77,7 +84,7 @@ header .refresh:hover {
 ul {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   padding: 2rem;
   width: 100%;
 }
@@ -86,16 +93,34 @@ li {
   font-size: 1.8em;
   list-style: none;
   width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
 }
 
 .check-box {
   margin-right: 1rem;
 }
 
-.list-container ul li .kebab {
-  color: grey;
-  float: right;
+.text-task {
+  flex: 1;
+  padding: 1rem;
+  margin-right: 0.6rem;
+  border: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 1em;
+  resize: none;
+  background-color: transparent;
+}
+
+.list-container ul li .icon {
+  color: #bbb;
   cursor: move;
+}
+
+.list-container ul li .icon:hover {
+  color: #000;
 }
 
 button {
@@ -112,6 +137,10 @@ button {
 button:hover {
   color: black;
   text-decoration: underline;
+}
+
+.highlight {
+  background-color: lightyellow;
 }
 
 /* media queries */

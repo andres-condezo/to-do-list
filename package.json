@@ -5,20 +5,21 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "start": "webpack && webpack serve --open"
+    "build": "webpack --mode production --config webpack.config.js",
+    "dev": "webpack --config webpack.config.dev.js && webpack serve --open",
+    "start": "webpack --mode production --config webpack.config.js && webpack serve --open"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andres-condezo/webpack-demo.git"
+    "url": "git+https://github.com/andres-condezo/To-Do-list.git"
   },
   "keywords": [],
   "author": "Andres Condezo <ra.condezo@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/andres-condezo/webpack-demo/issues"
+    "url": "https://github.com/andres-condezo/To-Do-list/issues"
   },
-  "homepage": "https://github.com/andres-condezo/webpack-demo#readme",
+  "homepage": "https://github.com/andres-condezo/To-Do-list#readme",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.5.1",
@@ -37,6 +38,7 @@
     "webpack-dev-server": "^4.7.3"
   },
   "dependencies": {
+    "chokidar": "^3.5.2",
     "lodash": "^4.17.21"
   }
 }
