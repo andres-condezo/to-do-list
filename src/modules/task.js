@@ -1,19 +1,9 @@
-const taskArr = [
-  {
-    description: 'Task 1',
-    completed: true,
-    index: 1,
-  },
-  {
-    description: 'Task 2',
-    completed: false,
-    index: 2,
-  },
-  {
-    description: 'Task 3',
-    completed: false,
-    index: 3,
-  },
-];
+class Task {
+  constructor(description = 'All clean', completed = false, index = 0) {
+    this.description = description;
+    this.completed = completed;
+    this.index = index;
+  }
+}
 
-export default taskArr;
+export default Task;
