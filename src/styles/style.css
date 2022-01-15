@@ -72,7 +72,7 @@ header .refresh:hover {
   border-bottom: 1px solid grey;
   padding: 2rem;
   font-style: italic;
-  font-size: 1.6em;
+  font-size: 1.4em;
 }
 
 ::placeholder {
@@ -92,7 +92,7 @@ ul {
 }
 
 li {
-  font-size: 1.8em;
+  font-size: 1.2em;
   list-style: none;
   width: 100%;
   display: flex;
@@ -128,7 +128,7 @@ li {
   border: none;
   outline: none;
   font-family: var(--font-sans);
-  font-size: 1em;
+  font-size: 1.2em;
   resize: none;
   background-color: transparent;
   animation: zoom-in 0.4s alternate ease-in;
@@ -206,5 +206,13 @@ li {
 
   .to-do-container {
     width: 40%;
+  }
+
+  .new-task {
+    font-size: 1.6em;
+  }
+
+  .text-task {
+    font-size: 1.3em;
   }
 }
