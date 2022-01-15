@@ -24,8 +24,80 @@ class ToDoApp {
 
   // main functions
 
+  getIndex = () => this.taskArr.length + 1;
+
+  updateTaskArr = () => {
+    const tempArr = [...this.taskArr];
+    this.taskArr = [];
+    tempArr.forEach((task) => {
+      const newTask = new Task(task.description, false, this.getIndex());
+      this.taskArr.push(newTask);
+    });
+    this.saveLocalStorage();
+  }
+
+  addRemoveFunction = (trashIcon, index) => {
+    trashIcon.addEventListener('click', () => {
+      this.taskArr.splice(index, 1);
+      this.updateTaskArr();
+      this.getLocalStorage();
+      this.displayTasks();
+    });
+  }
+
+  addChangesListener = (textTask, index) => {
+    textTask.addEventListener('input', () => {
+      this.taskArr[index].description = textTask.value;
+      this.saveLocalStorage();
+    });
+  }
+
+  setClasses = (activate, li, ellipsisIcon, trashIcon, cursorStyle) => {
+    if (activate) {
+      li.classList.add('highlight');
+      trashIcon.classList.add('visible');
+      ellipsisIcon.classList.remove('visible');
+      trashIcon.style.cursor = cursorStyle;
+    } else {
+      li.classList.remove('highlight');
+      ellipsisIcon.classList.add('visible');
+      trashIcon.classList.remove('visible');
+      trashIcon.style.cursor = cursorStyle;
+    }
+  };
+
+  addActivationEvent = (textTask, li, ellipsisIcon, trashIcon, index) => {
+    textTask.addEventListener('click', () => {
+      this.setClasses(true, li, ellipsisIcon, trashIcon, 'pointer');
+      this.addChangesListener(textTask, index);
+    });
+    this.addRemoveFunction(trashIcon, index);
+  };
+
+  addDeactivationEvent = (textTask, li, ellipsisIcon, trashIcon) => {
+    textTask.addEventListener('focusout', () => {
+      setTimeout(() => {
+        this.setClasses(false, li, ellipsisIcon, trashIcon, 'move');
+      }, 120);
+    });
+  }
+
+  displayTasks = () => {
+    $root.innerHTML = '';
+    this.taskArr.forEach((task, index) => {
+      const input = createElement('input', { type: 'checkBox', class: 'check-box' });
+      const textTask = createElement('textarea', { class: 'text-task', contenteditable: 'true', rows: 1 }, [task.description]);
+      const ellipsisIcon = createElement('i', { class: 'icon fas fa-ellipsis-v visible' });
+      const trashIcon = createElement('i', { class: 'icon fas fa-trash-alt' });
+      const li = createElement('li', { class: 'task-li', draggable: 'true' }, [input, textTask, ellipsisIcon, trashIcon]);
+      this.addActivationEvent(textTask, li, ellipsisIcon, trashIcon, index);
+      this.addDeactivationEvent(textTask, li, ellipsisIcon, trashIcon);
+      render(li, $root);
+    });
+  };
+
   pushTask = (taskDescription) => {
-    const newTask = new Task(taskDescription, false, this.taskArr.length);
+    const newTask = new Task(taskDescription, false, this.getIndex());
     this.taskArr.push(newTask);
     this.saveLocalStorage();
   }
@@ -37,63 +109,6 @@ class ToDoApp {
       this.displayTasks();
     }
   }
-
-  updateTaskArr = () => {
-    const tempArr = [...this.taskArr];
-    this.taskArr = [];
-    tempArr.forEach((task) => {
-      const newTask = new Task(task.description, false, this.taskArr.length);
-      this.taskArr.push(newTask);
-    });
-    this.saveLocalStorage();
-  }
-
-  activateItem = (textTask, li, icon, index) => {
-    textTask.addEventListener('click', () => {
-      li.classList.add('highlight');
-      icon.classList.add('fa-trash-alt');
-      icon.classList.remove('fa-ellipsis-v');
-      icon.style.cursor = 'pointer';
-
-      icon.addEventListener('click', () => {
-        this.taskArr.splice(index, 1);
-        this.updateTaskArr();
-        this.getLocalStorage();
-        this.displayTasks();
-      });
-
-      textTask.addEventListener('input', () => {
-        this.taskArr[index].description = textTask.value;
-        this.saveLocalStorage();
-      });
-    });
-  };
-
-  deactivateItem = (textTask, li, icon) => {
-    textTask.addEventListener('focusout', () => {
-      setTimeout(() => {
-        li.classList.remove('highlight');
-        icon.classList.add('fa-ellipsis-v');
-        icon.classList.remove('fa-trash-alt');
-        icon.style.cursor = 'move';
-      }, 120);
-    });
-  }
-
-  displayTasks = () => {
-    $root.innerHTML = '';
-    this.taskArr.forEach((task, index) => {
-      const input = createElement('input', { type: 'checkBox', class: 'check-box' });
-      const textTask = createElement('textarea', { class: 'text-task', contenteditable: 'true', rows: 1 }, [task.description]);
-      const icon = createElement('i', { class: 'icon fas fa-ellipsis-v' });
-      const li = createElement('li', { class: 'task-li', draggable: 'true' }, [input, textTask, icon]);
-
-      this.activateItem(textTask, li, icon, index);
-      this.deactivateItem(textTask, li, icon);
-
-      render(li, $root);
-    });
-  };
 }
 
 export default ToDoApp;
