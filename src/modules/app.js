@@ -35,7 +35,7 @@ class ToDoApp {
     const tempArr = [...this.taskArr];
     this.taskArr = [];
     tempArr.forEach((task) => {
-      const newTask = new Task(task.description, false, this.getIndex());
+      const newTask = new Task(task.description, task.completed, this.getIndex());
       this.taskArr.push(newTask);
     });
     this.saveLocalStorage();
@@ -45,6 +45,7 @@ class ToDoApp {
 
   completedArrIsNotEmpty = () => this.completedTaskArr.length;
 
+  // check
   checkCompletedArr = () => {
     if (this.completedArrIsNotEmpty()) {
       $removeBtn.classList.add('active');
@@ -56,7 +57,6 @@ class ToDoApp {
   addRemoveFunction = (trashIcon, index) => {
     trashIcon.addEventListener('click', () => {
       this.taskArr.splice(index, 1);
-      this.completedTaskArr = [];
       this.completedTaskArr = this.completedTaskArr.filter((el) => el !== index);
       this.checkCompletedArr();
       this.updateTaskArr();
@@ -102,19 +102,32 @@ class ToDoApp {
     });
   }
 
+  // check update
   addCheckBoxListener = ($checkBox, $textTask, $square, $check, index) => {
-    $checkBox.addEventListener('change', () => {
-      if ($checkBox.checked) {
-        this.completedTaskArr.push(index);
-      } else {
-        this.completedTaskArr = this.completedTaskArr.filter((el) => el !== index);
-      }
+    if (this.taskArr[index].completed === true) {
       $check.classList.toggle('hidden');
       $square.classList.toggle('hidden');
       $textTask.classList.toggle('underlined');
-      this.taskArr[index].completed = !this.taskArr[index].completed;
-      this.saveLocalStorage();
-      this.checkCompletedArr();
+    }
+
+    $checkBox.addEventListener('change', () => {
+      if ($checkBox.checked) {
+        this.completedTaskArr.push(index);
+        $check.classList.toggle('hidden');
+        $square.classList.toggle('hidden');
+        $textTask.classList.toggle('underlined');
+        this.taskArr[index].completed = true;
+        this.saveLocalStorage();
+        this.checkCompletedArr();
+      } else {
+        this.completedTaskArr = this.completedTaskArr.filter((el) => el !== index);
+        $check.classList.toggle('hidden');
+        $square.classList.toggle('hidden');
+        $textTask.classList.toggle('underlined');
+        this.taskArr[index].completed = false;
+        this.saveLocalStorage();
+        this.checkCompletedArr();
+      }
     });
   }
 
