@@ -75,12 +75,15 @@ class ToDoApp {
   setClasses = (InputIsFocused, li, ellipsisIcon, trashIcon, cursorStyle) => {
     if (InputIsFocused) {
       trashIcon.style.cursor = cursorStyle;
+      li.classList.add('highlight');
+      ellipsisIcon.classList.remove('visible');
+      trashIcon.classList.add('visible');
     } else {
       ellipsisIcon.style.cursor = cursorStyle;
+      li.classList.remove('highlight');
+      ellipsisIcon.classList.add('visible');
+      trashIcon.classList.remove('visible');
     }
-    li.classList.toggle('highlight');
-    ellipsisIcon.classList.toggle('visible');
-    trashIcon.classList.toggle('visible');
   };
 
   addActivationEvent = (textTask, li, ellipsisIcon, trashIcon, index) => {
