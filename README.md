@@ -29,7 +29,13 @@
 - Learn how to use proper ES6 syntax.
 - Use ES6 modules to write modular JavaScript.
 
+## Live Demo
+
+[Live Demo Link](https://andres-condezo.github.io/to-do-list/dist/index.html)
+
 ## Getting Started
+
+- In order to see the portfolio in your browser you must click on the link "Live Demo"
 
 - To get a local copy up and running follow these simple example steps:
 
