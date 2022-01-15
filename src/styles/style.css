@@ -1,7 +1,6 @@
 :root {
   --neutral-color: #172b4d;
-  --primary-color: #7f8cff;
-  --accent-color: #2230d2;
+  --accent-color: #FF8008;
   --font-sans: verdana, arial, sans-serif;
 }
 
@@ -26,6 +25,9 @@ body {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
+  background: #8E2DE2;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .to-do-container {
@@ -34,8 +36,8 @@ body {
   flex-direction: column;
   align-items: flex-start;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.8) 0 8px 18px;
 }
 
 header {
@@ -43,18 +45,23 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #FF8008;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FFC837, #FF8008);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FFC837, #FF8008); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 20px 20px 0 0;
 }
 
 h1 {
-  font-size: 1.6em;
+  font-size: 2em;
   padding: 1rem;
-  padding: 2rem;
+  padding: 3rem;
+  color: black;
 }
 
 header .refresh {
-  color: grey;
+  color: #fff;
   font-size: 1.6em;
-  margin-right: 2rem;
+  margin-right: 4rem;
   cursor: pointer;
 }
 
@@ -66,7 +73,6 @@ header .refresh:hover {
   width: 100%;
   border: none;
   outline: none;
-  border-top: 1px solid grey;
   border-bottom: 1px solid grey;
   padding: 2rem;
   font-style: italic;
@@ -115,23 +121,27 @@ li {
 }
 
 .list-container ul li .icon {
-  color: #bbb;
+  color: var(--accent-color);
   cursor: move;
+  padding: 1rem;
+  text-align: center;
+  display: none;
 }
 
 .list-container ul li .icon:hover {
-  color: #000;
+  color: black;
 }
 
 button {
   all: unset;
   width: 100%;
   color: grey;
-  background-color: #e6e6e6;
+  background-color: #ddd;
   font-size: 1.6em;
   height: 6rem;
   text-align: center;
   cursor: pointer;
+  border-radius: 0 0 20px 20px;
 }
 
 button:hover {
@@ -140,7 +150,15 @@ button:hover {
 }
 
 .highlight {
-  background-color: lightyellow;
+  background-color: #f9f3e0;
+}
+
+/* .list-container ul li .visible { */
+/*   display: block; */
+/* } */
+
+.list-container ul li .visible {
+  display: block;
 }
 
 /* media queries */
