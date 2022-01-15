@@ -213,6 +213,10 @@ li {
   }
 
   .text-task {
-    font-size: 1.3em;
+    font-size: 1.4em;
+  }
+
+  li {
+    font-size: 1.4em;
   }
 }
