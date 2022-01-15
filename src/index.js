@@ -17,8 +17,6 @@ const $removeCompletedBtn = $('.removeCompletedBtn');
 
 const main = () => {
   app.getLocalStorage();
-  app.clearCompletedArr();
-  app.updateTaskArr();
   app.displayTasks();
   $refreshBtn.addEventListener('click', () => {
     app.clearCompletedArr();
