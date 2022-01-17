@@ -31,7 +31,7 @@
 
 ## Live Demo
 
-[Live Demo Link](https://andres-condezo.github.io/To-Do-list/dist/index.html)
+[To Do List Live Demo Link](https://andres-condezo.github.io/To-Do-list/dist/)
 
 ## Getting Started
 
