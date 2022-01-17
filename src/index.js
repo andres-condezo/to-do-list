@@ -19,8 +19,8 @@ const main = () => {
   app.getLocalStorage();
   app.displayTasks();
   $refreshBtn.addEventListener('click', () => {
-    app.clearCompletedArr();
-    app.checkCompletedArr();
+    app.clearTaskArr();
+    app.ChangeClearBtnState();
     app.displayTasks();
   });
   $newTaskInput.addEventListener('keypress', (event) => {
@@ -29,7 +29,7 @@ const main = () => {
   $removeCompletedBtn.addEventListener('click', () => {
     app.deleteCompletedTasks();
   });
-  app.checkCompletedArr();
+  app.ChangeClearBtnState();
 };
 
 main();
