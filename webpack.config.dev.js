@@ -1,6 +1,37 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const rules = [
+  {
+    test: /\.js$/,
+    loader: 'babel-loader',
+    options: {
+      presets:
+      [
+        '@babel/preset-react',
+        {
+          runtime: 'automatic',
+        },
+      ],
+    },
+  },
+  {
+    test: /\.css$/i,
+    use: ['style-loader', 'css-loader'],
+  },
+  {
+    test: /\.(png|scg|jpg|jpeg|gif)$/i,
+    type: 'asset/resource',
+  },
+  {
+    test: /\.(woff|woff2|eot|ttf|otf)$/i,
+    type: 'asset/resource',
+    generator: {
+      filename: 'assets/fonts/[hash][ext]',
+    },
+  },
+];
+
 module.exports = {
   entry: './src/index.js',
   mode: 'development',
@@ -31,23 +62,5 @@ module.exports = {
       '@images': path.resolve(__dirname, 'src/img/'),
     },
   },
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|scg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/fonts/[hash][ext]',
-        },
-      },
-    ],
-  },
+  module: { rules },
 };
