@@ -163,13 +163,7 @@ li {
   font-size: 1.6em;
   height: 6rem;
   text-align: center;
-  cursor: pointer;
   border-radius: 0 0 20px 20px;
-}
-
-.removeCompletedBtn:hover {
-  color: black;
-  text-decoration: underline;
 }
 
 /* extra styles */
@@ -189,6 +183,13 @@ li {
 
 .active {
   color: black;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.active:hover {
+  color: black;
+  text-decoration: underline;
 }
 
 .hidden {
