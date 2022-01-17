@@ -13,7 +13,7 @@ import { $ } from './modules/utils.js';
 const app = new ToDoApp();
 const $newTaskInput = $('.new-task');
 const $refreshBtn = $('.refresh');
-const $removeCompletedBtn = $('.removeCompletedBtn');
+const $clearAllCompletedBtn = $('.removeCompletedBtn');
 
 const main = () => {
   app.getLocalStorage();
@@ -26,7 +26,7 @@ const main = () => {
   $newTaskInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') { app.addTask($newTaskInput); }
   });
-  $removeCompletedBtn.addEventListener('click', () => {
+  $clearAllCompletedBtn.addEventListener('click', () => {
     app.clearAllCompleted();
   });
   app.ChangeClearBtnState();
