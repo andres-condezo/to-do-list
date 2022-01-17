@@ -3,27 +3,23 @@ import Task from './task.js';
 import { $ } from './utils.js';
 
 const $root = $('#root');
-const $removeBtn = $('.removeCompletedBtn');
+const clearBtn = $('.removeCompletedBtn');
 
 class ToDoApp {
   constructor() {
     this.taskArr = [];
-    this.completedTaskArr = [];
   }
 
   // Local Storage
 
   saveLocalStorage = () => {
     const localTaskArr = JSON.stringify(this.taskArr);
-    const localCompletedTaskArr = JSON.stringify(this.completedTaskArr);
     localStorage.setItem('taskArr', localTaskArr);
-    localStorage.setItem('completedTaskArr', localCompletedTaskArr);
   }
 
   getLocalStorage = () => {
-    if (localStorage.getItem('taskArr') && localStorage.getItem('completedTaskArr')) {
+    if (localStorage.getItem('taskArr')) {
       this.taskArr = JSON.parse(localStorage.getItem('taskArr'));
-      this.completedTaskArr = JSON.parse(localStorage.getItem('completedTaskArr'));
     }
   }
 
@@ -31,9 +27,11 @@ class ToDoApp {
 
   getIndex = () => this.taskArr.length + 1;
 
+  clearTaskArr = () => { this.taskArr = []; };
+
   updateTaskArr = () => {
     const tempArr = [...this.taskArr];
-    this.taskArr = [];
+    this.clearTaskArr();
     tempArr.forEach((task) => {
       const newTask = new Task(task.description, task.completed, this.getIndex());
       this.taskArr.push(newTask);
@@ -41,24 +39,10 @@ class ToDoApp {
     this.saveLocalStorage();
   }
 
-  clearCompletedArr = () => { this.completedTaskArr = []; this.saveLocalStorage(); };
-
-  completedArrIsNotEmpty = () => this.completedTaskArr.length;
-
-  // check
-  checkCompletedArr = () => {
-    if (this.completedArrIsNotEmpty()) {
-      $removeBtn.classList.add('active');
-    } else {
-      $removeBtn.classList.remove('active');
-    }
-  };
-
   addRemoveFunction = (trashIcon, index) => {
     trashIcon.addEventListener('click', () => {
       this.taskArr.splice(index, 1);
-      this.completedTaskArr = this.completedTaskArr.filter((el) => el !== index);
-      this.checkCompletedArr();
+      this.ChangeClearBtnState();
       this.updateTaskArr();
       this.getLocalStorage();
       this.displayTasks();
@@ -72,23 +56,15 @@ class ToDoApp {
     });
   }
 
-  setClasses = (InputIsFocused, li, ellipsisIcon, trashIcon, cursorStyle) => {
-    if (InputIsFocused) {
-      trashIcon.style.cursor = cursorStyle;
-      li.classList.add('highlight');
-      ellipsisIcon.classList.remove('visible');
-      trashIcon.classList.add('visible');
-    } else {
-      ellipsisIcon.style.cursor = cursorStyle;
-      li.classList.remove('highlight');
-      ellipsisIcon.classList.add('visible');
-      trashIcon.classList.remove('visible');
-    }
+  setClasses = (li, ellipsisIcon, trashIcon) => {
+    li.classList.toggle('highlight');
+    ellipsisIcon.classList.toggle('visible');
+    trashIcon.classList.toggle('visible');
   };
 
   addActivationEvent = (textTask, li, ellipsisIcon, trashIcon, index) => {
     textTask.addEventListener('click', () => {
-      this.setClasses(true, li, ellipsisIcon, trashIcon, 'pointer');
+      this.setClasses(li, ellipsisIcon, trashIcon);
       this.addChangesListener(textTask, index);
     });
     this.addRemoveFunction(trashIcon, index);
@@ -96,82 +72,86 @@ class ToDoApp {
 
   addDeactivationEvent = (textTask, li, ellipsisIcon, trashIcon) => {
     textTask.addEventListener('focusout', () => {
-      setTimeout(() => {
-        this.setClasses(false, li, ellipsisIcon, trashIcon, 'move');
-      }, 220);
+      setTimeout(() => { this.setClasses(li, ellipsisIcon, trashIcon); }, 220);
     });
   }
 
-  // check update
-  addCheckBoxListener = ($checkBox, $textTask, $square, $check, index) => {
+  clearBtnState = 0;
+
+  thereAreCompletedTasks = () => this.clearBtnState;
+
+  ChangeClearBtnState = () => {
+    if (this.thereAreCompletedTasks) clearBtn.classList.add('active');
+    else clearBtn.classList.remove('active');
+  };
+
+  showCompletedTasks = (index, $check, $box, $textTask) => {
     if (this.taskArr[index].completed === true) {
       $check.classList.toggle('hidden');
-      $square.classList.toggle('hidden');
+      $box.classList.toggle('hidden');
       $textTask.classList.toggle('underlined');
     }
+  }
 
+  addCheckBoxListener = ($checkBox, $textTask, $box, $check, index) => {
     $checkBox.addEventListener('change', () => {
-      if ($checkBox.checked) {
-        this.completedTaskArr.push(index);
-        $check.classList.toggle('hidden');
-        $square.classList.toggle('hidden');
-        $textTask.classList.toggle('underlined');
-        this.taskArr[index].completed = true;
-        this.saveLocalStorage();
-        this.checkCompletedArr();
-      } else {
-        this.completedTaskArr = this.completedTaskArr.filter((el) => el !== index);
-        $check.classList.toggle('hidden');
-        $square.classList.toggle('hidden');
-        $textTask.classList.toggle('underlined');
-        this.taskArr[index].completed = false;
-        this.saveLocalStorage();
-        this.checkCompletedArr();
-      }
+      if ($checkBox.checked) this.clearBtnState += 1;
+      else this.clearBtnState -= 1;
+      console.log(this.clearBtnState);
+      $check.classList.toggle('hidden');
+      $box.classList.toggle('hidden');
+      $textTask.classList.toggle('underlined');
+      this.taskArr[index].completed = !this.taskArr[index].completed;
+      this.saveLocalStorage();
+      this.ChangeClearBtnState();
     });
   }
 
+  // Delete completed task from task array
   deleteCompletedTasks = () => {
-    this.completedTaskArr.forEach((num) => {
-      this.completedTaskArr = this.completedTaskArr.filter((el) => el !== num);
-      this.saveLocalStorage();
-    });
-    this.checkCompletedArr();
+    this.clearBtnState = 0;
+    this.ChangeClearBtnState();
+    console.log(this.clearBtnState);
     this.taskArr = this.taskArr.filter((el) => el.completed === false);
     this.saveLocalStorage();
-    this.updateTaskArr();
     this.getLocalStorage();
+    this.updateTaskArr();
     this.displayTasks();
   }
 
+  addEvents = (textTask, li, ellipsisIcon, trashIcon, checkBox, check, box, index) => {
+    this.addDeactivationEvent(textTask, li, ellipsisIcon, trashIcon);
+    this.addCheckBoxListener(checkBox, textTask, box, check, index);
+    this.addActivationEvent(textTask, li, ellipsisIcon, trashIcon, index);
+    this.showCompletedTasks(index, check, box, textTask);
+  };
+
+  // Create and render DOM elements
   displayTasks = () => {
     $root.innerHTML = '';
     this.taskArr.forEach((task, index) => {
-      const checkBox = createElement('input', { type: 'checkBox', class: 'check-box' });
-      const square = createElement('i', { class: 'far fa-square square' });
-      const check = createElement('i', { class: 'fas fa-check check hidden' });
-      const textTask = createElement('textarea', { class: 'text-task', contenteditable: 'true', rows: 1 }, [task.description]);
-      const ellipsisIcon = createElement('i', { class: 'icon fas fa-ellipsis-v visible' });
-      const trashIcon = createElement('i', { class: 'icon fas fa-trash-alt' });
-      const li = createElement('li', { class: 'task-li', draggable: 'true' }, [square, check, checkBox, textTask, ellipsisIcon, trashIcon]);
-      this.addActivationEvent(textTask, li, ellipsisIcon, trashIcon, index);
-      this.addDeactivationEvent(textTask, li, ellipsisIcon, trashIcon);
-      this.addCheckBoxListener(checkBox, textTask, square, check, index);
+      const textTaskProperties = { class: 'text-task', contenteditable: 'true', rows: 1 };
+      const check/*        */ = createElement('i', { class: 'fas fa-check check hidden' });
+      const box/*          */ = createElement('i', { class: 'far fa-square box' });
+      const checkBox/*     */ = createElement('input', { type: 'checkBox', class: 'check-box' });
+      const textTask/*     */ = createElement('textarea', textTaskProperties, [task.description]);
+      const ellipsisIcon/* */ = createElement('i', { class: 'icon fas fa-ellipsis-v ellipsis-icon visible' });
+      const trashIcon/*    */ = createElement('i', { class: 'icon fas fa-trash-alt trash-icon' });
+      const liChildren = [check, box, checkBox, textTask, ellipsisIcon, trashIcon];
+      const li = createElement('li', { class: 'task-li', draggable: 'true' }, liChildren);
+      this.addEvents(textTask, li, ellipsisIcon, trashIcon, checkBox, check, box, index);
       render(li, $root);
     });
   };
 
-  pushTask = (taskDescription) => {
-    const newTask = new Task(taskDescription, false, this.getIndex());
-    this.taskArr.push(newTask);
-    this.saveLocalStorage();
-  }
-
+  // Create new task and push it onto the Task Array
   addTask = ($newTaskInput) => {
     if ($newTaskInput.value) {
-      this.pushTask($newTaskInput.value);
-      $newTaskInput.value = '';
+      const newTask = new Task($newTaskInput.value, false, this.getIndex());
+      this.taskArr.push(newTask);
+      this.saveLocalStorage();
       this.displayTasks();
+      $newTaskInput.value = '';
     }
   }
 }
