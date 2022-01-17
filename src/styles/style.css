@@ -107,13 +107,13 @@ li {
   cursor: pointer;
 }
 
-.square,
+.box,
 .check {
   position: absolute;
   animation: zoom-in 0.2s alternate ease-in;
 }
 
-.square {
+.box {
   color: grey;
 }
 
@@ -136,12 +136,19 @@ li {
 
 .list-container ul li .icon {
   color: var(--accent-color);
-  cursor: move;
   padding: 1rem;
   text-align: center;
   display: none;
   animation: zoom-in 0.2s alternate ease-in;
   transition: all 0.4s ease-out;
+}
+
+.ellipsis-icon {
+  cursor: move;
+}
+
+.trash-icon {
+  cursor: pointer;
 }
 
 .list-container ul li .icon:hover {
