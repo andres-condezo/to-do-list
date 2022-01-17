@@ -27,7 +27,7 @@ const main = () => {
     if (event.key === 'Enter') { app.addTask($newTaskInput); }
   });
   $removeCompletedBtn.addEventListener('click', () => {
-    app.deleteCompletedTasks();
+    app.clearAllCompleted();
   });
   app.ChangeClearBtnState();
 };
