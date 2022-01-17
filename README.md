@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# To-Do-list
+# To Do List App
 
 >	The To-Do list app is a minimalist planner to organize your day.
 
@@ -31,7 +31,7 @@
 
 ## Live Demo
 
-[To Do List Live Demo Link](https://andres-condezo.github.io/To-Do-list/dist/)
+[To Do List Live Demo Link](https://andres-condezo.github.io/to-do-list/dist/)
 
 ## Getting Started
 
