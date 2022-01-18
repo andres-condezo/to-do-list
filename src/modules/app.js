@@ -1,9 +1,19 @@
+// This Module contains the app class
+
+// ***************
+// Local Storage
+// ***************
+
 import { createElement, render } from './render.js';
 import Task from './task.js';
 import { $ } from './utils.js';
 
 const $root = $('#root');
 const clearBtn = $('.removeCompletedBtn');
+
+// ***************
+// To Do App Class
+// ***************
 
 class ToDoApp {
   constructor() {
@@ -20,53 +30,59 @@ class ToDoApp {
   getLocalStorage = () => {
     const storageIsNotEmpty = localStorage.getItem('taskArr');
     const localStorageArr = JSON.parse(localStorage.getItem('taskArr'));
-    if (storageIsNotEmpty) {
-      this.taskArr = localStorageArr;
-    }
+
+    if (storageIsNotEmpty) this.taskArr = localStorageArr;
   }
 
-  // main functions
-
+  // Get the index of a new task
   getIndex = () => this.taskArr.length + 1;
 
-  clearTaskArr = () => { this.taskArr = []; };
-
-  updateTaskArr = () => {
-    const tempArr = [...this.taskArr];
-    this.clearTaskArr();
-    tempArr.forEach((task) => {
-      const index = this.getIndex();
-      const newTask = new Task(task.description, task.completed, index);
-      this.taskArr.push(newTask);
+  // Update the index property for every task of the array.
+  updateIndex = () => {
+    this.taskArr.forEach((task, index) => {
+      task.index = index + 1;
     });
-    this.saveLocalStorage();
   }
 
+  // Delete the entire array of tasks
+  clearTaskArr = () => { this.taskArr = []; };
+
+  // Update the interface and storage
+  updateApp = () => {
+    this.updateIndex();
+    this.saveLocalStorage();
+    this.ChangeClearBtnState();
+    this.getLocalStorage();
+    this.displayTasks();
+  }
+
+  // Remove one task
   addRemoveFunction = (trashIcon, index) => {
     trashIcon.addEventListener('click', () => {
       this.taskArr.splice(index, 1);
-      this.ChangeClearBtnState();
-      this.updateTaskArr();
-      this.getLocalStorage();
-      this.displayTasks();
+      this.updateApp();
     });
   }
 
+  // Save the new description for the task
   addChangesListener = (textTask, index) => {
-    const task = this.taskArr[index];
-    const newDescription = textTask.value;
     textTask.addEventListener('input', () => {
+      const task = this.taskArr[index];
+      const newDescription = textTask.value;
+
       task.description = newDescription;
       this.saveLocalStorage();
     });
   }
 
+  // Set active or idle style for an item
   setClasses = (li, ellipsisIcon, trashIcon) => {
     li.classList.toggle('highlight');
     ellipsisIcon.classList.toggle('visible');
     trashIcon.classList.toggle('visible');
   };
 
+  // Handle the active status of the task.
   addActivationEvent = (textTask, li, ellipsisIcon, trashIcon, index) => {
     textTask.addEventListener('click', () => {
       this.setClasses(li, ellipsisIcon, trashIcon);
@@ -75,22 +91,29 @@ class ToDoApp {
     this.addRemoveFunction(trashIcon, index);
   };
 
+  // Handle the idle status of the task.
   addDeactivationEvent = (textTask, li, ellipsisIcon, trashIcon) => {
     textTask.addEventListener('focusout', () => {
-      setTimeout(() => { this.setClasses(li, ellipsisIcon, trashIcon); }, 220);
+      setTimeout(() => {
+        this.setClasses(li, ellipsisIcon, trashIcon);
+      }, 220);
     });
   }
 
+  // Look for completed tasks
   thereAreCompletedTasks = () => this.taskArr.some((task) => task.completed === true);
 
+  // Handle the Clear Btn State
   ChangeClearBtnState = () => {
     if (this.thereAreCompletedTasks()) clearBtn.classList.add('active');
     else clearBtn.classList.remove('active');
   };
 
+  // Show completed status
   showCompletedTasks = (index, $check, $box, $textTask) => {
     const currentTask = this.taskArr[index];
     const isCompleted = (task) => task.completed === true;
+
     if (isCompleted(currentTask)) {
       $check.classList.toggle('hidden');
       $box.classList.toggle('hidden');
@@ -98,8 +121,10 @@ class ToDoApp {
     }
   }
 
+  // Handle the check box toggle
   addCheckBoxListener = ($checkBox, $textTask, $box, $check, index) => {
     const task = this.taskArr[index];
+
     $checkBox.addEventListener('change', () => {
       $check.classList.toggle('hidden');
       $box.classList.toggle('hidden');
@@ -112,17 +137,15 @@ class ToDoApp {
 
   // Delete completed task from task array
   clearAllCompleted = () => {
+    const uncompletedTasks = this.taskArr.filter((el) => el.completed === false);
+
     if (this.thereAreCompletedTasks()) {
-      const uncompletedTasks = this.taskArr.filter((el) => el.completed === false);
       this.taskArr = uncompletedTasks;
-      this.saveLocalStorage();
-      this.ChangeClearBtnState();
-      this.getLocalStorage();
-      this.updateTaskArr();
-      this.displayTasks();
+      this.updateApp();
     }
   }
 
+  // Add event listeners to DOM elements
   addEvents = (textTask, li, ellipsisIcon, trashIcon, checkBox, check, box, index) => {
     this.addDeactivationEvent(textTask, li, ellipsisIcon, trashIcon);
     this.addCheckBoxListener(checkBox, textTask, box, check, index);
@@ -154,11 +177,11 @@ class ToDoApp {
     const completed = false;
     const index = this.getIndex();
     const descriptionIsValid = description;
+    const newTask = new Task(description, completed, index);
+
     if (descriptionIsValid) {
-      const newTask = new Task(description, completed, index);
       this.taskArr.push(newTask);
-      this.saveLocalStorage();
-      this.displayTasks();
+      this.updateApp();
       $newTaskInput.value = '';
     }
   }
