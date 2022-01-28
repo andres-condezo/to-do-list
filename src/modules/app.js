@@ -1,9 +1,5 @@
 // This Module contains the app class
 
-// ***************
-// Local Storage
-// ***************
-
 import { createElement, render } from './render.js';
 import Task from './task.js';
 import { $ } from './utils.js';
