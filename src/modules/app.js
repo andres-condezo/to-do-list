@@ -154,12 +154,12 @@ class ToDoApp {
     $root.innerHTML = '';
     this.taskArr.forEach((task, index) => {
       const textTaskProperties = { class: 'text-task', contenteditable: 'true', rows: 1 };
-      const check/*        */ = createElement('i', { class: 'fas fa-check check hidden' });
-      const box/*          */ = createElement('i', { class: 'far fa-square box' });
-      const checkBox/*     */ = createElement('input', { type: 'checkBox', class: 'check-box' });
-      const textTask/*     */ = createElement('textarea', textTaskProperties, [task.description]);
-      const ellipsisIcon/* */ = createElement('i', { class: 'icon fas fa-ellipsis-v ellipsis-icon visible' });
-      const trashIcon/*    */ = createElement('i', { class: 'icon fas fa-trash-alt trash-icon' });
+      const check  createElement('i', { class: 'fas fa-check check hidden' });
+      const box = createElement('i', { class: 'far fa-square box' });
+      const checkBox = createElement('input', { type: 'checkBox', class: 'check-box' });
+      const textTask = createElement('textarea', textTaskProperties, [task.description]);
+      const ellipsisIcon = createElement('i', { class: 'icon fas fa-ellipsis-v ellipsis-icon visible' });
+      const trashIcon = createElement('i', { class: 'icon fas fa-trash-alt trash-icon' });
       const liChildren = [check, box, checkBox, textTask, ellipsisIcon, trashIcon];
       const li = createElement('li', { class: 'task-li', draggable: 'true' }, liChildren);
       this.addEvents(textTask, li, ellipsisIcon, trashIcon, checkBox, check, box, index);
